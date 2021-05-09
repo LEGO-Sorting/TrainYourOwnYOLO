@@ -59,6 +59,9 @@ from Train_Utils import (
 )
 
 
+from Augmentation import augmented_data_generator_wrapper
+
+
 keras_path = os.path.join(src_path, "keras_yolo3")
 Data_Folder = os.path.join(get_parent_dir(1), "Data")
 Image_Folder = os.path.join(Data_Folder, "Source_Images", "Training_Images")
@@ -253,8 +256,9 @@ if __name__ == "__main__":
             num_train, num_val, batch_size
         )
     )
+    
     history = model.fit_generator(
-        data_generator_wrapper(
+        augmented_data_generator_wrapper(
             lines[:num_train], batch_size, input_shape, anchors, num_classes
         ),
         steps_per_epoch=max(1, num_train // batch_size),
@@ -290,8 +294,9 @@ if __name__ == "__main__":
             num_train, num_val, batch_size
         )
     )
+        
     history = model.fit_generator(
-        data_generator_wrapper(
+        augmented_data_generator_wrapper(
             lines[:num_train], batch_size, input_shape, anchors, num_classes
         ),
         steps_per_epoch=max(1, num_train // batch_size),
